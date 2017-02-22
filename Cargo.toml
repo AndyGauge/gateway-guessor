@@ -1,0 +1,6 @@
+[package]
+name = "gateway"
+version = "1.0.0"
+authors = ["Andrew Gauger <andygauge@gmail.com>"]
+
+[dependencies]
