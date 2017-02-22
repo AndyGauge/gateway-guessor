@@ -11,12 +11,10 @@ fn main() {
                         if (gateway::ip::is_valid(address_parts[0]) && address_parts[1].to_string().parse::<u8>().unwrap() < 33) {
                                 gateway::ip::guess_gateway(address_parts[0], gateway::ip::make_mask_from_cidr(address_parts[1].to_string().parse::<u8>().unwrap()))
                         } else {
-                            println!("you suck");
+                            println!("Check your IP address again and make sure it is correct.");
                         }
-
-
                     } else {
-                        panic!("you suck");
+                        panic!("There should only be 1 slash, an IP address first then a CIDR notation (1-32) after the slash");
                     }
             },
             3 => {
