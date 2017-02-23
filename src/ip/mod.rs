@@ -14,11 +14,7 @@ pub fn is_valid(address: &str) -> bool {
 }
 
 pub fn make_mask_from_cidr(cidr: u8) -> u32 {
-    let mut mask: u32 = 0;
-    for x in 0..cidr {
-        mask += 2u32.pow(31-x as u32);
-    }
-    return mask
+    0xffffffff_u32 & !(0xffffffff >> cidr)
 }
 
 pub fn make_mask_from_string(address: &str) -> u32 {
