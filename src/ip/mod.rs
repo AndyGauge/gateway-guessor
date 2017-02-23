@@ -14,7 +14,7 @@ pub fn is_valid(address: &str) -> bool {
 }
 
 pub fn make_mask_from_cidr(cidr: u8) -> u32 {
-    0xffffffff_u32 & !(0xffffffff >> cidr)
+    0xffffffff_u32 & !((0xffffffff_u64 >> cidr) as u32)
 }
 
 pub fn make_mask_from_string(address: &str) -> u32 {
