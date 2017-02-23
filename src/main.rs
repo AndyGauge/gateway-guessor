@@ -1,5 +1,6 @@
 use std::env;
-extern crate gateway;
+
+pub mod ip;
 
 fn main() {
 
@@ -8,8 +9,8 @@ fn main() {
             2 => {
                     let address_parts: Vec<&str> = args[1].split('/').collect();
                     if address_parts.len() == 2 {
-                        if (gateway::ip::is_valid(address_parts[0]) && address_parts[1].to_string().parse::<u8>().unwrap() < 33) {
-                                gateway::ip::guess_gateway(address_parts[0], gateway::ip::make_mask_from_cidr(address_parts[1].to_string().parse::<u8>().unwrap()))
+                        if (ip::is_valid(address_parts[0]) && address_parts[1].to_string().parse::<u8>().unwrap() < 33) {
+                                ip::guess_gateway(address_parts[0], ip::make_mask_from_cidr(address_parts[1].to_string().parse::<u8>().unwrap()))
                         } else {
                             println!("Check your IP address again and make sure it is correct.");
                         }
@@ -18,8 +19,8 @@ fn main() {
                     }
             },
             3 => {
-                if gateway::ip::is_valid(&args[1]) {
-                    gateway::ip::guess_gateway(&args[1], gateway::ip::make_mask_from_string(&args[2]));
+                if ip::is_valid(&args[1]) {
+                    ip::guess_gateway(&args[1], ip::make_mask_from_string(&args[2]));
                 } else {
                     println!("Host address should look like this: 192.168.0.1")
                 }
