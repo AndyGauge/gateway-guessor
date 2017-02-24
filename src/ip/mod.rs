@@ -13,15 +13,11 @@ pub fn is_valid(address: &str) -> bool {
     return octet_count == 4
 }
 
-
-pub fn make_mask_from_cidr(cidr: u8) -> u32 {
-    
-
 pub fn make_mask_from_cidr(cidr: u8) -> Result<u32, ()> {
     if cidr > 32 {
         return Err(());
     }
-    let mut mask: 0xffffffff_u32 & !((0xffffffff_u64 >> cidr) as u32);   
+    let mask = 0xffffffff_u32 & !((0xffffffff_u64 >> cidr) as u32);
     return Ok(mask)
 
 }
