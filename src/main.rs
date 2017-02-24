@@ -1,22 +1,30 @@
 use std::env;
-
 pub mod ip;
+use std::process;
 
 fn main() {
 
     let args: Vec<String> = env::args().collect();
     match args.len() {
             2 => {
-                    let address_parts: Vec<&str> = args[1].split('/').collect();
-                    if address_parts.len() == 2 {
-                        if (ip::is_valid(address_parts[0]) && address_parts[1].to_string().parse::<u8>().unwrap() < 33) {
-                                ip::guess_gateway(address_parts[0], ip::make_mask_from_cidr(address_parts[1].to_string().parse::<u8>().unwrap()))
-                        } else {
-                            println!("Check your IP address again and make sure it is correct.");
-                        }
+
+                let address_parts: Vec<&str> = args[1].split('/').collect();
+                if address_parts.len() == 2 {
+                    if ip::is_valid(address_parts[0]) && address_parts[1].to_string().parse::<u8>().unwrap() < 33 {
+                        let mask_from_cidr = match ip::make_mask_from_cidr(address_parts[1].to_string().parse::<u8>().unwrap()) {
+                            Ok(m) => m,
+                            Err(_) => {
+                                println!("Your CIDR is too high");
+                                process::exit(1);
+                            }
+                        };
+                        ip::guess_gateway(address_parts[0], mask_from_cidr);
                     } else {
-                        panic!("There should only be 1 slash, an IP address first then a CIDR notation (1-32) after the slash");
+                        println!("Check your IP address again and make sure it is correct.");
                     }
+                } else {
+                    panic!("There should only be 1 slash, an IP address first then a CIDR notation (1-32) after the slash");
+                }
             },
             3 => {
                 if ip::is_valid(&args[1]) {

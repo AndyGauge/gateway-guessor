@@ -3,22 +3,23 @@ pub fn is_valid(address: &str) -> bool {
     let mut octet_count: u8 = 0;
     for byte in octets {
         match byte.to_string().parse::<u8>() {
-        Err(e) => return false,
-        Ok(n) => octet_count += 1,
+            Err(_) => return false,
+            Ok(_)  => octet_count += 1,
         }
-        if octet_count == 4 {
-            return true
+        if octet_count > 4 {
+            return false;
         }
     }
-    return false
+    return octet_count == 4
 }
 
-pub fn make_mask_from_cidr(cidr: u8) -> u32 {
-    let mut mask: u32 = 0;
-    for x in 0..cidr {
-        mask += 2u32.pow(31-x as u32);
+pub fn make_mask_from_cidr(cidr: u8) -> Result<u32, ()> {
+    if cidr > 32 {
+        return Err(());
     }
-    return mask
+    let mask = 0xffffffff_u32 & !((0xffffffff_u64 >> cidr) as u32);
+    return Ok(mask)
+
 }
 
 pub fn make_mask_from_string(address: &str) -> u32 {
