@@ -10,7 +10,7 @@ pub fn is_valid(address: &str) -> bool {
     let octets = address.split(".");
     let mut octet_count: u8 = 0;
     for byte in octets {
-        match byte.to_string().parse::<u8>() {
+        match byte.parse::<u8>() {
             Err(_) => return false,
             Ok(_)  => octet_count += 1,
         }
@@ -36,7 +36,7 @@ pub fn make_mask_from_string(address: &str) -> u32 {
     let mut octet_count: u8 = 3;
     let mut mask: u32 = 0;
     for byte in octets {
-        let ibyte = byte.to_string().parse::<u8>().unwrap();
+        let ibyte = byte.parse::<u8>().unwrap();
         mask += 256u32.pow(octet_count as u32) * ibyte as u32;
         if octet_count > 0 {
             octet_count -= 1;
