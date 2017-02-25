@@ -10,8 +10,8 @@ fn main() {
 
                 let address_parts: Vec<&str> = args[1].split('/').collect();
                 if address_parts.len() == 2 {
-                    if ip::is_valid(address_parts[0]) && address_parts[1].to_string().parse::<u8>().unwrap() < 33 {
-                        let mask_from_cidr = match ip::make_mask_from_cidr(address_parts[1].to_string().parse::<u8>().unwrap()) {
+                    if ip::is_valid(address_parts[0]) && address_parts[1].parse::<u8>().unwrap() < 33 {
+                        let mask_from_cidr = match ip::make_mask_from_cidr(address_parts[1].parse::<u8>().unwrap()) {
                             Ok(m) => m,
                             Err(_) => {
                                 println!("Your CIDR is too high");
