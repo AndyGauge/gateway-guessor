@@ -28,7 +28,7 @@ fn main() {
             },
             3 => {
                 if ip::is_valid(&args[1]) {
-                    ip::guess_gateway(&args[1], ip::make_mask_from_string(&args[2]));
+                    ip::guess_gateway(&args[1], ip::make_mask_from_string(&args[2]).unwrap());
                 } else {
                     println!("Host address should look like this: 192.168.0.1")
                 }
