@@ -1,6 +1,9 @@
+cargo-features = ["edition"]
+
 [package]
 name = "gateway"
 version = "1.1.0"
 authors = ["Andrew Gauger <andygauge@gmail.com>"]
+edition= "2018"
 
 [dependencies]
