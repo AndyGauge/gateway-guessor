@@ -1,3 +1,4 @@
+#![feature(rust_2018_preview)]
 use std::env;
 pub mod ip;
 use std::process;
